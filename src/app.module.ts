@@ -19,7 +19,7 @@ import { AuthModule } from './auth/auth.module';
       password: 'ih4UT4nFEYTYK9CpXy9dZA0TQhoxRZbb',
       database: 'task_t1hk',
       entities: [Task, User],
-      synchronize: false,
+      synchronize: true,
     }),
     TaskModule,
     UserModule,
