@@ -13,13 +13,13 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: 'dpg-ci2jr0rhp8u1a1aslv0g-a',
       port: 5432,
-      username: 'postgres',
-      password: '123',
-      database: 'Task',
+      username: 'task_user',
+      password: 'ih4UT4nFEYTYK9CpXy9dZA0TQhoxRZbb',
+      database: 'task_t1hk',
       entities: [Task, User],
-      synchronize: true,
+      synchronize: false,
     }),
     TaskModule,
     UserModule,
