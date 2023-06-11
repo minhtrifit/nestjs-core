@@ -7,6 +7,7 @@ import {
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
+import { Role } from 'src/models/role.enum';
 
 @Injectable()
 export class AuthService {
@@ -15,12 +16,13 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async getTokens(id: number, username: string) {
+  async getTokens(id: number, username: string, roles: Role[]) {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         {
           id: id,
-          username,
+          username: username,
+          roles: roles,
         },
         {
           secret: 'accesskey',
@@ -30,7 +32,8 @@ export class AuthService {
       this.jwtService.signAsync(
         {
           id: id,
-          username,
+          username: username,
+          roles: roles,
         },
         {
           secret: 'refreshkey',
@@ -52,7 +55,7 @@ export class AuthService {
     if (!user) throw new NotFoundException('Not found user');
     if (user && !checkPassword) throw new UnauthorizedException();
 
-    return await this.getTokens(user?.id, user.username);
+    return await this.getTokens(user?.id, user.username, user.roles);
   }
 
   async refreshToken(username: string) {
@@ -61,7 +64,7 @@ export class AuthService {
     if (!user) throw new ForbiddenException('Access Denied');
     return {
       message: 'Refresh token successfully',
-      tokens: await this.getTokens(user?.id, user.username),
+      tokens: await this.getTokens(user?.id, user.username, user.roles),
     };
   }
 }

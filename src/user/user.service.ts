@@ -9,6 +9,7 @@ import * as bcrypt from 'bcrypt';
 import { User } from './entity/user.entity';
 import { User as UserType } from 'src/types/user.types';
 import { createUserDto } from './dto/user-create.dto';
+import { Role } from 'src/models/role.enum';
 
 @Injectable()
 export class UserService {
