@@ -8,6 +8,7 @@ import { Task } from './task/entity/task.entity';
 import { User } from './user/entity/user.entity';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AuthModule } from './auth/auth.module';
     TaskModule,
     UserModule,
     AuthModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
