@@ -9,11 +9,11 @@ export class ChatService {
     { name: 'Maria', text: 'Love you', room: '1' },
     { name: 'Tommy', text: 'Ahihi', room: '2' },
   ];
-
   clientToUser = {};
+  userJoinedList = [];
 
   create(createChatDto: CreateChatDto, clientId: string) {
-    console.log(createChatDto, this.clientToUser, clientId);
+    // console.log(createChatDto, this.clientToUser, clientId);
 
     const message = {
       name: this.clientToUser[clientId],
@@ -34,10 +34,18 @@ export class ChatService {
     return roomMessages;
   }
 
-  identify(name: string, clientId: string) {
+  identify(name: string, clientId: string, room: string) {
     this.clientToUser[clientId] = name;
 
-    return Object.values(this.clientToUser);
+    for (const key in this.clientToUser) {
+      this.userJoinedList.push({
+        name: `${this.clientToUser[key]}`,
+        clientId: key,
+        room: room,
+      });
+    }
+
+    return this.userJoinedList;
   }
 
   getClientName(clientId: string) {

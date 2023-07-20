@@ -4,7 +4,9 @@ import {
   MessageBody,
   WebSocketServer,
   ConnectedSocket,
+  OnGatewayConnection,
 } from '@nestjs/websockets';
+import { Logger } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { Server, Socket } from 'socket.io';
@@ -14,11 +16,17 @@ import { Server, Socket } from 'socket.io';
     origin: '*',
   },
 })
-export class ChatGateway {
+export class ChatGateway implements OnGatewayConnection {
   @WebSocketServer()
   server: Server;
 
   constructor(private readonly chatService: ChatService) {}
+
+  private logger = new Logger('AppGateway');
+
+  handleConnection(client: Socket) {
+    console.log('Client connected:', client.id);
+  }
 
   @SubscribeMessage('createChat')
   async create(
@@ -46,7 +54,7 @@ export class ChatGateway {
   ) {
     client.join(room);
 
-    return this.chatService.identify(name, client.id);
+    return this.chatService.identify(name, client.id, room);
   }
 
   @SubscribeMessage('typing')
