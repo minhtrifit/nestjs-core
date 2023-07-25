@@ -9,6 +9,7 @@ import { User } from './user/entity/user.entity';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ChatModule } from './chat/chat.module';
+import { SocketModule } from './socket/socket.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ChatModule } from './chat/chat.module';
     UserModule,
     AuthModule,
     ChatModule,
+    SocketModule,
   ],
   controllers: [AppController],
   providers: [AppService],
